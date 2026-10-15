@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naginyata | Illustrator / Artist</title>
+<meta name="description" content="Artwork portfolio of Naginyata, illustrator and artist.">
+<meta name="theme-color" content="#2f2a3a">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" id="logo"></a>
+    <nav>
+      <a href="#works">Works</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="role" id="role"></div>
+    <h1 id="name"></h1>
+    <p id="tagline"></p>
+    <a class="btn" href="#works">View works</a>
+  </div>
+
+  <section id="works">
+    <div class="wrap">
+      <h2>Works</h2>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap two">
+      <div>
+        <h2>About</h2>
+        <div class="card about">
+          <div class="avatar" id="avatar"></div>
+          <div id="aboutText"></div>
+        </div>
+      </div>
+      <div>
+        <h2>Links</h2>
+        <div class="card links" id="links"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <div class="card">
+        <form id="form">
+          <div><label for="fn">NAME</label><input id="fn" required></div>
+          <div><label for="fe">EMAIL</label><input id="fe" type="email" required></div>
+          <div><label for="fm">MESSAGE</label><textarea id="fm" required></textarea></div>
+          <div><button class="btn" type="submit" style="margin-top:0">Send</button></div>
+          <div class="note" id="note"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> <span id="foot"></span>. All artwork rights reserved by the artist.</footer>
+
+<div id="lb"><div class="box" id="lbBox"></div></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
