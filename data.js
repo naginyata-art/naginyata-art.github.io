@@ -10,7 +10,6 @@ window.SITE = {
   introSub: "Digital Art · Traditional",
   slogan: "Show my artwork",
   smallText: "Digital and traditional illustration by Naginyata.",
-  handle: "@NagiNyata",
   avatar: "", // e.g. "images/profile.jpg"
 
   about: [
@@ -18,6 +17,7 @@ window.SITE = {
     "This is a small home for my artwork. Profile text will be updated soon."
   ],
 
+  // Shown as the 3 boxes on the About Me screen.
   // Leave url empty ("") to show the link as "coming soon"
   links: [
     { label: "X (Twitter)", handle: "@NagiNyata", url: "https://x.com/NagiNyata" },
@@ -25,6 +25,7 @@ window.SITE = {
     { label: "Fanbox / Patreon / Ko-fi", handle: "", url: "" }
   ],
 
+  // Tab order on the My Work screen ("All" is added last automatically)
   categories: ["Digital Art", "Traditional"],
 
   artworks: [
@@ -34,11 +35,6 @@ window.SITE = {
     { title: "Artwork 04", alt: "Artwork 04", category: "Digital Art", image: "" },
     { title: "Artwork 05", alt: "Artwork 05", category: "Traditional", image: "" },
     { title: "Artwork 06", alt: "Artwork 06", category: "Digital Art", image: "" }
-  ],
-
-  otherWorks: [
-    { title: "Other 01", alt: "Other 01", category: "Other", image: "" },
-    { title: "Other 02", alt: "Other 02", category: "Other", image: "" }
   ],
 
   // Contact form endpoint (leave "" until set up).

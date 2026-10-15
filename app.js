@@ -17,37 +17,38 @@
   if(seen){ $("intro").style.display = "none"; document.body.classList.remove("lock"); }
   else { $("start").addEventListener("click", closeIntro); try{ $("start").focus(); }catch(e){} }
 
+  // ---- screens: one at a time, switched by the URL hash ----
+  var screens = ["home","work","about","contact"];
+  function route(){
+    var h = (location.hash || "#home").slice(1);
+    if(screens.indexOf(h) < 0) h = "home";
+    screens.forEach(function(s){ $(s).classList.toggle("on", s === h); });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
   // ---- static text ----
   $("logo").textContent = S.name.toUpperCase();
-  $("role").textContent = S.role;
   $("slogan").textContent = S.slogan;
   $("small").textContent = S.smallText;
-  $("handle").textContent = S.handle;
   $("foot").textContent = S.name;
   $("year").textContent = new Date().getFullYear();
 
-  var menu = [["My Work","#work"],["Other Work","#other"],["Socials","#socials"],["About Me","#about"],["Work With Me","#contact"]];
+  var menu = [["My Work","#work"],["About Me","#about"],["Work With Me","#contact"]];
   $("menu").innerHTML = menu.map(function(m){return '<a href="'+m[1]+'">'+esc(m[0])+'<span>→</span></a>'}).join("");
 
+  // ---- about ----
   $("aboutText").innerHTML = S.about.map(function(p){return "<p>"+esc(p)+"</p>"}).join("");
-  ["avatar","avatarHome"].forEach(function(id){
-    if(S.avatar) $(id).innerHTML = '<img src="'+esc(S.avatar)+'" alt="'+esc(S.name)+'">';
-  });
-
-  // ---- links (socials / about / footer) ----
-  $("links").innerHTML = S.links.map(function(l){
-    var on = !!l.url;
-    return '<a class="link'+(on?'':' off')+'"'+(on?' href="'+esc(l.url)+'" target="_blank" rel="noopener"':'')+'>'
-      +'<span>'+esc(l.label)+'</span><small>'+esc(on?(l.handle||'→'):'coming soon')+'</small></a>';
-  }).join("");
+  if(S.avatar) $("avatar").innerHTML = '<img src="'+esc(S.avatar)+'" alt="'+esc(S.name)+'">';
   $("aLinks").innerHTML = S.links.map(function(l){
-    return l.url ? '<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>' : '<span>'+esc(l.label)+'</span>';
-  }).join("");
-  $("fLinks").innerHTML = S.links.filter(function(l){return l.url}).map(function(l){
-    return '<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>';
+    if(l.url){
+      return '<a class="lbox" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+'<small>'+esc(l.handle||'')+'</small></a>';
+    }
+    return '<div class="lbox off">'+esc(l.label)+'<small>coming soon</small></div>';
   }).join("");
 
-  // ---- galleries ----
+  // ---- My Work gallery ----
   function card(a,i){
     var label = a.alt || a.title;
     var th = a.image ? '<img loading="lazy" src="'+esc(a.image)+'" alt="'+esc(label)+'">' : esc(a.title);
@@ -58,25 +59,12 @@
       + '<p>'+esc(a.title)+(a.category?' · '+esc(a.category):'')+'</p>';
     $("lb").classList.add("on");
   }
-  function bind(gridId, getList){
-    var g = $(gridId);
-    g.addEventListener("click",function(e){
-      var c=e.target.closest(".art"); if(!c) return;
-      showLB(getList()[+c.getAttribute("data-i")]);
-    });
-    g.addEventListener("keydown",function(e){
-      if(e.key!=="Enter" && e.key!==" ") return;
-      var c=e.target.closest(".art"); if(!c) return;
-      e.preventDefault(); showLB(getList()[+c.getAttribute("data-i")]);
-    });
-  }
-
   var current = "All";
   function visible(){
     return S.artworks.filter(function(a){return current==="All"||a.category===current});
   }
   function renderFilters(){
-    var cats = ["All"].concat(S.categories);
+    var cats = S.categories.concat(["All"]);
     $("filters").innerHTML = cats.map(function(c){
       return '<button class="chip'+(c===current?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>';
     }).join("");
@@ -89,19 +77,18 @@
     var b=e.target.closest(".chip"); if(!b) return;
     current=b.getAttribute("data-c"); renderFilters(); renderWork();
   });
-  bind("grid", visible);
-  renderFilters(); renderWork();
-
-  var other = S.otherWorks || [];
-  if(other.length){
-    $("gridOther").innerHTML = other.map(card).join("");
-    bind("gridOther", function(){return other});
-  } else {
-    $("other").style.display = "none";
-  }
-
+  $("grid").addEventListener("click",function(e){
+    var c=e.target.closest(".art"); if(!c) return;
+    showLB(visible()[+c.getAttribute("data-i")]);
+  });
+  $("grid").addEventListener("keydown",function(e){
+    if(e.key!=="Enter" && e.key!==" ") return;
+    var c=e.target.closest(".art"); if(!c) return;
+    e.preventDefault(); showLB(visible()[+c.getAttribute("data-i")]);
+  });
   $("lb").addEventListener("click",function(){$("lb").classList.remove("on")});
   document.addEventListener("keydown",function(e){if(e.key==="Escape")$("lb").classList.remove("on")});
+  renderFilters(); renderWork();
 
   // ---- contact ----
   $("form").addEventListener("submit",function(e){

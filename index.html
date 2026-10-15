@@ -22,65 +22,49 @@
 <header>
   <div class="wrap">
     <a class="logo" href="#home" id="logo"></a>
-    <nav class="top">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
   </div>
 </header>
 
 <main>
-  <section id="home" class="home">
-    <div class="wrap">
+  <!-- Home: 3 buttons + slogan -->
+  <section class="screen" id="home">
+    <div class="wrap home-in">
       <nav class="menu" id="menu" aria-label="Main menu"></nav>
       <div class="slogan">
-        <div class="role" id="role"></div>
         <h1 id="slogan"></h1>
         <div class="bar"></div>
         <p id="small"></p>
-        <div class="who"><div class="avatar" id="avatarHome"></div><span id="handle"></span></div>
       </div>
     </div>
   </section>
 
-  <section id="work">
+  <!-- My Work -->
+  <section class="screen" id="work">
     <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2>My Work</h2>
       <div class="filters" id="filters"></div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
 
-  <section id="other">
+  <!-- About Me -->
+  <section class="screen" id="about">
     <div class="wrap">
-      <h2>Other Work</h2>
-      <div class="grid" id="gridOther"></div>
-    </div>
-  </section>
-
-  <section id="socials">
-    <div class="wrap">
-      <h2>Socials</h2>
-      <div class="card links" id="links"></div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2>About Me</h2>
-      <div class="card">
-        <div class="about">
-          <div id="aboutText"></div>
-          <div class="avatar big" id="avatar"></div>
-        </div>
-        <div class="alinks" id="aLinks"></div>
+      <div class="card about">
+        <div id="aboutText"></div>
+        <div class="avatar big" id="avatar"></div>
       </div>
+      <div class="lboxes" id="aLinks"></div>
     </div>
   </section>
 
-  <section id="contact">
+  <!-- Work With Me (form) -->
+  <section class="screen" id="contact">
     <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2>Work With Me</h2>
       <div class="card">
         <form id="form">
@@ -96,10 +80,7 @@
 </main>
 
 <footer>
-  <div class="wrap">
-    <div class="flinks" id="fLinks"></div>
-    <div>© <span id="year"></span> <span id="foot"></span>. All artwork rights reserved by the artist.</div>
-  </div>
+  <div class="wrap">© <span id="year"></span> <span id="foot"></span>. All artwork rights reserved by the artist.</div>
 </footer>
 
 <div id="lb"><div class="box" id="lbBox"></div></div>
