@@ -47,7 +47,7 @@ window.SITE = {
   // Embeds from social media (shown under the gallery on My work).
   // xTimeline: show the latest posts of the X account. xPosts / instagramPosts: specific post URLs.
   embeds: {
-    xTimeline: true,
+    xTimeline: false,   // X now often shows an empty box for profile timelines, so it is off
     xPosts: [],          // e.g. "https://x.com/NagiNyata/status/123456789"
     instagramPosts: []   // e.g. "https://www.instagram.com/p/XXXXXXXX/"
   },
