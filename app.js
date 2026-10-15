@@ -52,7 +52,8 @@
   function card(a,i){
     var label = a.alt || a.title;
     var th = a.image ? '<img loading="lazy" src="'+esc(a.image)+'" alt="'+esc(label)+'">' : esc(a.title);
-    return '<div class="art" tabindex="0" role="button" aria-label="'+esc(label)+'" data-i="'+i+'"><div class="thumb">'+th+'</div><div class="cap">'+esc(label)+'</div></div>';
+    var tag = a.sample ? '<span class="tag">SAMPLE</span>' : '';
+    return '<div class="art" tabindex="0" role="button" aria-label="'+esc(label)+'" data-i="'+i+'"><div class="thumb">'+th+'</div>'+tag+'<div class="cap">'+esc(label)+'</div></div>';
   }
   function showLB(a){
     $("lbBox").innerHTML = (a.image?'<img src="'+esc(a.image)+'" alt="'+esc(a.alt||a.title)+'">':'<div class="ph"></div>')
