@@ -17,7 +17,8 @@ window.SITE = {
   // Sample text. The real profile will replace it.
   about: [
     "Hi, I'm Naginyata, an illustrator and artist working in both digital and traditional media.",
-    "I love drawing quiet, natural scenes and characters. Commissions and collaborations are welcome. (Sample text: the real profile goes here.)"
+    "I love drawing quiet, natural scenes and characters, and I care about keeping each piece calm and clear.",
+    "Commissions and collaborations are welcome. (Sample text: the real profile goes here.)"
   ],
 
   // Shown as the 3 boxes on the About Me screen.
@@ -43,6 +44,9 @@ window.SITE = {
   // Contact form endpoint (leave "" until set up).
   // While empty, the form falls back to opening the visitor's mail app
   // addressed to contactEmail.
+  // Options in the "Type of request" dropdown
+  contactTypes: ["Commission", "Collaboration", "Question", "Other"],
+
   contactEndpoint: "",
   contactEmail: "naginyata.draws@gmail.com"
 };

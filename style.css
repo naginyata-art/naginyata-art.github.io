@@ -14,6 +14,7 @@ body{
   line-height:1.7;-webkit-font-smoothing:antialiased;
   min-height:100vh;display:flex;flex-direction:column;
 }
+html{scroll-behavior:smooth}
 body.lock{overflow:hidden}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
@@ -30,26 +31,24 @@ main{flex:1}
 #intro small{display:block;margin-top:14px;color:var(--gray);font-size:12px;letter-spacing:.1em}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.25)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.start{animation:none}#intro{transition:none}.screen.on{animation:none}}
+@media(prefers-reduced-motion:reduce){.start{animation:none}#intro{transition:none}html{scroll-behavior:auto}}
 
 /* header */
 header{position:sticky;top:0;z-index:20;background:var(--black);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;height:60px}
 .logo{font-weight:600;letter-spacing:.08em;font-size:15px}
 
-/* screens (one at a time) */
-.screen{display:none;padding:40px 0 56px}
-.screen.on{display:block;animation:fade .35s ease}
-.back{display:inline-block;color:var(--gray);font-size:13px;margin-bottom:22px}
-.back:hover{color:var(--white)}
-.screen h2{font-size:clamp(26px,5vw,40px);font-weight:600;line-height:1.2;margin-bottom:26px}
+/* sections (one long scrolling page) */
+.sec{padding:64px 0;scroll-margin-top:60px}
+.sec+.sec{border-top:1px solid var(--line)}
+.sec h2{font-size:clamp(26px,5vw,40px);font-weight:600;line-height:1.2;margin-bottom:26px}
 
-/* home */
-#home.on{display:flex;align-items:center;min-height:calc(100vh - 61px - 74px)}
+/* main: menu left, slogan right */
+#top{min-height:calc(100vh - 61px);display:flex;align-items:center}
 .home-in{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:center}
 .menu{display:flex;flex-direction:column;gap:14px;max-width:340px}
 .menu a{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--black-card);font-weight:600;font-size:16px;transition:border-color .2s,transform .2s}
-.menu a:hover{border-color:var(--gray);transform:translateX(4px)}
+.menu a:hover,.menu a:focus-visible{border-color:var(--gray);transform:translateX(4px);outline:none}
 .menu a span{color:var(--gray)}
 .slogan h1{font-size:clamp(38px,7vw,72px);font-weight:600;line-height:1.05;letter-spacing:-.01em}
 .bar{width:120px;height:3px;background:var(--white);margin:20px 0 14px}
@@ -70,11 +69,11 @@ header .wrap{display:flex;align-items:center;height:60px}
 .chip{background:transparent;color:var(--gray);border:1px solid var(--line);border-radius:999px;padding:7px 20px;font-size:14px;cursor:pointer;font-family:inherit}
 .chip:hover{color:var(--white);border-color:var(--gray)}
 .chip.on{background:var(--white);color:var(--black);border-color:var(--white)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-.art{position:relative;background:var(--black-card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s}
+.grid{column-count:3;column-gap:18px}
+.art{position:relative;display:block;break-inside:avoid;margin:0 0 18px;background:var(--black-card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s}
 .art:hover,.art:focus-visible{transform:translateY(-3px);border-color:var(--gray);outline:none}
-.art .thumb{aspect-ratio:4/5;background:var(--gray);display:flex;align-items:center;justify-content:center;color:var(--black);font-size:13px;overflow:hidden}
-.art .thumb img{width:100%;height:100%;object-fit:cover}
+.art .thumb img{width:100%;height:auto}
+.art .ph{aspect-ratio:4/5;background:var(--gray);display:flex;align-items:center;justify-content:center;color:var(--black);font-size:13px}
 .art .tag{position:absolute;top:10px;left:10px;padding:2px 9px;border-radius:999px;background:rgba(47,42,58,.85);color:var(--gray);font-size:10px;letter-spacing:.14em;border:1px solid var(--line)}
 .art .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(47,42,58,.92));color:var(--white);font-size:13px;opacity:0;transition:opacity .2s}
 .art:hover .cap,.art:focus-visible .cap{opacity:1}
@@ -94,8 +93,12 @@ a.lbox:hover{border-color:var(--gray)}
 /* contact */
 form{display:grid;gap:14px;max-width:560px}
 label{font-size:12px;color:var(--gray);letter-spacing:.06em}
-input,textarea{width:100%;margin-top:6px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--black);color:var(--white);font:inherit;font-size:15px}
-input:focus,textarea:focus{outline:none;border-color:var(--gray)}
+label i{font-style:normal;color:var(--white)}
+.err{color:var(--white);font-size:12px;min-height:0;margin-top:4px}
+.err:not(:empty)::before{content:"! ";font-weight:700}
+[aria-invalid=true]{border-color:var(--white)!important}
+input,textarea,select{width:100%;margin-top:6px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--black);color:var(--white);font:inherit;font-size:15px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gray)}
 textarea{min-height:140px;resize:vertical}
 .note{font-size:13px;color:var(--gray);min-height:20px}
 
@@ -109,13 +112,18 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--gray);font-si
 #lb .ph{width:min(80vw,420px);aspect-ratio:4/5;background:var(--gray);border-radius:10px;margin:0 auto}
 #lb p{margin-top:12px;color:var(--gray);font-size:14px}
 
+@media(max-width:900px){.grid{column-count:2}}
 @media(max-width:720px){
-  #home.on{min-height:auto;padding-top:28px}
+  .sec{padding:48px 0;scroll-margin-top:56px}
+  #top{min-height:auto;padding-top:40px}
   .home-in{grid-template-columns:1fr;gap:34px}
   .slogan{order:-1}
   .menu{max-width:none}
+  .menu a{padding:18px 20px}
+  .chip{padding:10px 20px}
   .about{grid-template-columns:1fr}
   .about .avatar{order:-1}
   .lboxes{grid-template-columns:1fr}
-  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .grid{column-gap:12px}
+  .art{margin-bottom:12px}
 }

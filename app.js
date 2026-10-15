@@ -17,17 +17,6 @@
   if(seen){ $("intro").style.display = "none"; document.body.classList.remove("lock"); }
   else { $("start").addEventListener("click", closeIntro); try{ $("start").focus(); }catch(e){} }
 
-  // ---- screens: one at a time, switched by the URL hash ----
-  var screens = ["home","work","about","contact"];
-  function route(){
-    var h = (location.hash || "#home").slice(1);
-    if(screens.indexOf(h) < 0) h = "home";
-    screens.forEach(function(s){ $(s).classList.toggle("on", s === h); });
-    window.scrollTo(0,0);
-  }
-  window.addEventListener("hashchange", route);
-  route();
-
   // ---- static text ----
   $("logo").textContent = S.name.toUpperCase();
   $("slogan").textContent = S.slogan;
@@ -35,7 +24,7 @@
   $("foot").textContent = S.name;
   $("year").textContent = new Date().getFullYear();
 
-  var menu = [["My Work","#work"],["About Me","#about"],["Work With Me","#contact"]];
+  var menu = [["My work","#work"],["About me","#about"],["Work with me","#contact"]];
   $("menu").innerHTML = menu.map(function(m){return '<a href="'+m[1]+'">'+esc(m[0])+'<span>→</span></a>'}).join("");
 
   // ---- about ----
@@ -48,18 +37,25 @@
     return '<div class="lbox off">'+esc(l.label)+'<small>coming soon</small></div>';
   }).join("");
 
-  // ---- My Work gallery ----
+  // ---- My work gallery ----
+  var lastFocus = null;
   function card(a,i){
     var label = a.alt || a.title;
     var small = a.thumb || a.image; // small image for the grid, full image for the lightbox
-    var th = small ? '<img loading="lazy" decoding="async" src="'+esc(small)+'" alt="'+esc(label)+'">' : esc(a.title);
+    var th = small ? '<img loading="lazy" decoding="async" src="'+esc(small)+'" alt="'+esc(label)+'">' : '<div class="ph">'+esc(a.title)+'</div>';
     var tag = a.sample ? '<span class="tag">SAMPLE</span>' : '';
-    return '<div class="art" tabindex="0" role="button" aria-label="'+esc(label)+'" data-i="'+i+'"><div class="thumb">'+th+'</div>'+tag+'<div class="cap">'+esc(label)+'</div></div>';
+    return '<div class="art" tabindex="0" role="button" aria-label="'+esc(label)+'" data-i="'+i+'"><div class="thumb">'+th+'</div>'+tag+'<div class="cap">'+esc(a.title)+(a.category?' · '+esc(a.category):'')+'</div></div>';
   }
   function showLB(a){
     $("lbBox").innerHTML = (a.image?'<img src="'+esc(a.image)+'" alt="'+esc(a.alt||a.title)+'">':'<div class="ph"></div>')
-      + '<p>'+esc(a.title)+(a.category?' · '+esc(a.category):'')+'</p>';
+      + '<p>'+esc(a.title)+(a.category?' · '+esc(a.category):'')+(a.year?' · '+esc(a.year):'')+'</p>';
     $("lb").classList.add("on");
+    document.body.classList.add("lock");
+  }
+  function closeLB(){
+    $("lb").classList.remove("on");
+    if(!$("intro") || $("intro").style.display==="none" || $("intro").classList.contains("off")) document.body.classList.remove("lock");
+    if(lastFocus){ try{ lastFocus.focus({preventScroll:true}); }catch(e){} lastFocus=null; }
   }
   var current = "All";
   function visible(){
@@ -68,7 +64,7 @@
   function renderFilters(){
     var cats = S.categories.concat(["All"]);
     $("filters").innerHTML = cats.map(function(c){
-      return '<button class="chip'+(c===current?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>';
+      return '<button type="button" class="chip'+(c===current?' on':'')+'" aria-pressed="'+(c===current)+'" data-c="'+esc(c)+'">'+esc(c)+'</button>';
     }).join("");
   }
   function renderWork(){
@@ -79,28 +75,44 @@
     var b=e.target.closest(".chip"); if(!b) return;
     current=b.getAttribute("data-c"); renderFilters(); renderWork();
   });
+  function open(el){ lastFocus=el; showLB(visible()[+el.getAttribute("data-i")]); }
   $("grid").addEventListener("click",function(e){
-    var c=e.target.closest(".art"); if(!c) return;
-    showLB(visible()[+c.getAttribute("data-i")]);
+    var c=e.target.closest(".art"); if(c) open(c);
   });
   $("grid").addEventListener("keydown",function(e){
     if(e.key!=="Enter" && e.key!==" ") return;
     var c=e.target.closest(".art"); if(!c) return;
-    e.preventDefault(); showLB(visible()[+c.getAttribute("data-i")]);
+    e.preventDefault(); open(c);
   });
-  $("lb").addEventListener("click",function(){$("lb").classList.remove("on")});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape")$("lb").classList.remove("on")});
+  $("lb").addEventListener("click",closeLB);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape" && $("lb").classList.contains("on")) closeLB()});
   renderFilters(); renderWork();
 
   // ---- contact ----
+  $("ft").innerHTML = '<option value="">Select...</option>' + (S.contactTypes||["Other"]).map(function(t){return '<option>'+esc(t)+'</option>'}).join("");
+  var fields = [["fn","en","Please enter your name."],["fe","ee","Please enter a valid email address."],["ft","et","Please choose a type of request."],["fm","em","Please write your message."]];
+  function validate(){
+    var ok = true, first = null;
+    fields.forEach(function(f){
+      var el=$(f[0]), bad = !el.value.trim() || (el.type==="email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+      $(f[1]).textContent = bad ? f[2] : "";
+      el.setAttribute("aria-invalid", bad ? "true" : "false");
+      if(bad){ ok=false; if(!first) first=el; }
+    });
+    if(first) first.focus();
+    return ok;
+  }
+  fields.forEach(function(f){ $(f[0]).addEventListener("input",function(){ $(f[1]).textContent=""; $(f[0]).setAttribute("aria-invalid","false"); }); });
   $("form").addEventListener("submit",function(e){
     e.preventDefault();
     var note=$("note");
-    var data={name:$("fn").value.trim(),email:$("fe").value.trim(),message:$("fm").value.trim()};
+    if(!validate()){ note.textContent="Please check the highlighted fields."; return; }
+    var data={name:$("fn").value.trim(),email:$("fe").value.trim(),type:$("ft").value,message:$("fm").value.trim()};
     if(!S.contactEndpoint){
-      note.textContent="Opening your mail app. If nothing opens, please DM on X instead.";
+      // Not connected to a sending service yet: be honest, open the visitor's mail app instead.
+      note.textContent="This form isn't connected yet. Opening your mail app so you can send it from there. If nothing opens, please DM on X instead.";
       var body=data.message+"\n\n— "+data.name+" ("+data.email+")";
-      location.href="mailto:"+S.contactEmail+"?subject="+encodeURIComponent("Message from "+data.name)+"&body="+encodeURIComponent(body);
+      location.href="mailto:"+S.contactEmail+"?subject="+encodeURIComponent("["+data.type+"] Message from "+data.name)+"&body="+encodeURIComponent(body);
       return;
     }
     note.textContent="Sending...";

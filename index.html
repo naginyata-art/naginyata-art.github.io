@@ -6,7 +6,7 @@
 <title>Naginyata | Illustrator / Artist</title>
 <meta name="description" content="Artwork portfolio of Naginyata, illustrator and artist.">
 <meta name="theme-color" content="#2f2a3a">
-<link rel="stylesheet" href="style.css?v=20261016c">
+<link rel="stylesheet" href="style.css?v=20261016d">
 </head>
 <body class="lock">
 
@@ -21,13 +21,13 @@
 
 <header>
   <div class="wrap">
-    <a class="logo" href="#home" id="logo"></a>
+    <a class="logo" href="#top" id="logo"></a>
   </div>
 </header>
 
 <main>
-  <!-- Home: 3 buttons + slogan -->
-  <section class="screen" id="home">
+  <!-- 1. Main: menu (left) + slogan (right) -->
+  <section class="sec" id="top">
     <div class="wrap home-in">
       <nav class="menu" id="menu" aria-label="Main menu"></nav>
       <div class="slogan">
@@ -38,43 +38,48 @@
     </div>
   </section>
 
-  <!-- My Work -->
-  <section class="screen" id="work">
+  <!-- 2. My work -->
+  <section class="sec" id="work" aria-labelledby="hWork">
     <div class="wrap">
-      <a class="back" href="#home">&larr; Home</a>
-      <h2>My Work</h2>
-      <div class="filters" id="filters"></div>
+      <h2 id="hWork">My work</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filter works"></div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
 
-  <!-- About Me -->
-  <section class="screen" id="about">
+  <!-- 3. Work with me (form) -->
+  <section class="sec" id="contact" aria-labelledby="hContact">
     <div class="wrap">
-      <a class="back" href="#home">&larr; Home</a>
-      <h2>About Me</h2>
+      <h2 id="hContact">Work with me</h2>
+      <div class="card">
+        <form id="form" novalidate>
+          <div class="f"><label for="fn">NAME <i>*</i></label><input id="fn" autocomplete="name" required><div class="err" id="en"></div></div>
+          <div class="f"><label for="fe">EMAIL <i>*</i></label><input id="fe" type="email" autocomplete="email" required><div class="err" id="ee"></div></div>
+          <div class="f"><label for="ft">TYPE OF REQUEST <i>*</i></label><select id="ft" required></select><div class="err" id="et"></div></div>
+          <div class="f"><label for="fm">MESSAGE <i>*</i></label><textarea id="fm" required></textarea><div class="err" id="em"></div></div>
+          <div><button class="btn" type="submit" style="margin-top:0">Send</button></div>
+          <div class="note" id="note" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. About me -->
+  <section class="sec" id="about" aria-labelledby="hAbout">
+    <div class="wrap">
+      <h2 id="hAbout">About me</h2>
       <div class="card about">
         <div id="aboutText"></div>
         <div class="avatar big" id="avatar"></div>
       </div>
-      <div class="lboxes" id="aLinks"></div>
     </div>
   </section>
 
-  <!-- Work With Me (form) -->
-  <section class="screen" id="contact">
+  <!-- 5. Links -->
+  <section class="sec" id="links" aria-labelledby="hLinks">
     <div class="wrap">
-      <a class="back" href="#home">&larr; Home</a>
-      <h2>Work With Me</h2>
-      <div class="card">
-        <form id="form">
-          <div><label for="fn">NAME</label><input id="fn" required></div>
-          <div><label for="fe">EMAIL</label><input id="fe" type="email" required></div>
-          <div><label for="fm">MESSAGE</label><textarea id="fm" required></textarea></div>
-          <div><button class="btn" type="submit" style="margin-top:0">Send</button></div>
-          <div class="note" id="note"></div>
-        </form>
-      </div>
+      <h2 id="hLinks">Links</h2>
+      <div class="lboxes" id="aLinks"></div>
     </div>
   </section>
 </main>
@@ -85,7 +90,7 @@
 
 <div id="lb"><div class="box" id="lbBox"></div></div>
 
-<script src="data.js?v=20261016c"></script>
-<script src="app.js?v=20261016c"></script>
+<script src="data.js?v=20261016d"></script>
+<script src="app.js?v=20261016d"></script>
 </body>
 </html>
