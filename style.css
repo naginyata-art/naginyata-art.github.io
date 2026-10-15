@@ -81,6 +81,11 @@ header .wrap{display:flex;align-items:center;height:60px}
 @media(hover:none){.art .cap{opacity:1}}
 .empty{color:var(--gray);font-size:14px}
 
+.embeds{margin-top:44px;padding-top:28px;border-top:1px solid var(--line);max-width:560px}
+.embeds h3{font-size:18px;font-weight:600;margin-bottom:14px}
+.embeds .twitter-tweet,.embeds .instagram-media{margin:0 0 16px!important}
+.embed-note{color:var(--gray);font-size:12px;margin-top:10px}
+
 /* about */
 .about{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
 .about p{color:var(--gray);font-size:15px}

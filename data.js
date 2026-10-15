@@ -44,6 +44,14 @@ window.SITE = {
   // Contact form endpoint (leave "" until set up).
   // While empty, the form falls back to opening the visitor's mail app
   // addressed to contactEmail.
+  // Embeds from social media (shown under the gallery on My work).
+  // xTimeline: show the latest posts of the X account. xPosts / instagramPosts: specific post URLs.
+  embeds: {
+    xTimeline: true,
+    xPosts: [],          // e.g. "https://x.com/NagiNyata/status/123456789"
+    instagramPosts: []   // e.g. "https://www.instagram.com/p/XXXXXXXX/"
+  },
+
   // Options in the "Type of request" dropdown
   contactTypes: ["Commission", "Collaboration", "Question", "Other"],
 

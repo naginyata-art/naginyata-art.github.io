@@ -17,6 +17,25 @@
   if(seen){ $("intro").style.display = "none"; document.body.classList.remove("lock"); }
   else { $("start").addEventListener("click", closeIntro); try{ $("start").focus(); }catch(e){} }
 
+  // ---- social embeds (loaded only when My work is opened, once) ----
+  var embedsDone = false;
+  function addScript(src){ var s=document.createElement("script"); s.async=true; s.src=src; s.charset="utf-8"; document.body.appendChild(s); }
+  function loadEmbeds(){
+    if(embedsDone) return; embedsDone = true;
+    var E = S.embeds || {}, html = "", x = S.links.filter(function(l){return /x\.com|twitter\.com/.test(l.url||"")})[0];
+    var needX = false, needIG = false;
+    if(E.xTimeline && x){
+      html += '<h3>Latest from X</h3><a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter transparent" data-height="640" data-dnt="true" href="'+esc(x.url.replace("x.com","twitter.com"))+'">Posts by '+esc(x.handle||"")+'</a>';
+      needX = true;
+    }
+    (E.xPosts||[]).forEach(function(u){ html += '<blockquote class="twitter-tweet" data-theme="dark" data-dnt="true"><a href="'+esc(u.replace("x.com","twitter.com"))+'"></a></blockquote>'; needX = true; });
+    (E.instagramPosts||[]).forEach(function(u){ html += '<blockquote class="instagram-media" data-instgrm-permalink="'+esc(u)+'" data-instgrm-version="14"></blockquote>'; needIG = true; });
+    if(!html) return;
+    $("embeds").hidden = false; $("embeds").innerHTML = html + '<p class="embed-note">Posts are shown by X / Instagram and open on their sites.</p>';
+    if(needX) addScript("https://platform.twitter.com/widgets.js");
+    if(needIG) addScript("https://www.instagram.com/embed.js");
+  }
+
   // ---- screens: one at a time, switched by the URL hash ----
   var screens = ["home","work","about","contact"];
   function route(){
@@ -24,6 +43,7 @@
     if(screens.indexOf(h) < 0) h = "home";
     screens.forEach(function(s){ $(s).classList.toggle("on", s === h); });
     window.scrollTo(0,0);
+    if(h==="work") loadEmbeds();
   }
   window.addEventListener("hashchange", route);
   route();
