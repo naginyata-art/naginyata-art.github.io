@@ -12,7 +12,7 @@ window.SITE = {
   introSub: "Digital Art · Traditional",
   slogan: "Show my artwork",
   smallText: "Digital and traditional illustration by Naginyata.",
-  avatar: "images/avatar-sample.svg", // replace with the real icon, e.g. "images/profile.jpg"
+  avatar: "images/profile.webp",
 
   // Sample text. The real profile will replace it.
   about: [
