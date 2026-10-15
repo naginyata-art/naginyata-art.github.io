@@ -14,7 +14,6 @@ body{
   line-height:1.7;-webkit-font-smoothing:antialiased;
   min-height:100vh;display:flex;flex-direction:column;
 }
-html{scroll-behavior:smooth}
 body.lock{overflow:hidden}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
@@ -31,7 +30,7 @@ main{flex:1}
 #intro small{display:block;margin-top:14px;color:var(--gray);font-size:12px;letter-spacing:.1em}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.25)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.start{animation:none}#intro{transition:none}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){.start{animation:none}#intro{transition:none}.screen.on{animation:none}}
 
 /* header */
 header{position:sticky;top:0;z-index:20;background:var(--black);border-bottom:1px solid var(--line)}
@@ -39,12 +38,14 @@ header .wrap{display:flex;align-items:center;height:60px}
 .logo{font-weight:600;letter-spacing:.08em;font-size:15px}
 
 /* sections (one long scrolling page) */
-.sec{padding:64px 0;scroll-margin-top:60px}
-.sec+.sec{border-top:1px solid var(--line)}
-.sec h2{font-size:clamp(26px,5vw,40px);font-weight:600;line-height:1.2;margin-bottom:26px}
+.screen{display:none;padding:40px 0 56px}
+.screen.on{display:block;animation:fade .35s ease}
+.back{display:inline-block;color:var(--gray);font-size:13px;margin-bottom:22px}
+.back:hover{color:var(--white)}
+.screen h2{font-size:clamp(26px,5vw,40px);font-weight:600;line-height:1.2;margin-bottom:26px}
 
 /* main: menu left, slogan right */
-#top{min-height:calc(100vh - 61px);display:flex;align-items:center}
+#home.on{display:flex;align-items:center;min-height:calc(100vh - 61px - 74px)}
 .home-in{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:center}
 .menu{display:flex;flex-direction:column;gap:14px;max-width:340px}
 .menu a{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--black-card);font-weight:600;font-size:16px;transition:border-color .2s,transform .2s}
@@ -114,8 +115,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--gray);font-si
 
 @media(max-width:900px){.grid{column-count:2}}
 @media(max-width:720px){
-  .sec{padding:48px 0;scroll-margin-top:56px}
-  #top{min-height:auto;padding-top:40px}
+  #home.on{min-height:auto;padding-top:28px}
   .home-in{grid-template-columns:1fr;gap:34px}
   .slogan{order:-1}
   .menu{max-width:none}

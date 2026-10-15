@@ -17,6 +17,17 @@
   if(seen){ $("intro").style.display = "none"; document.body.classList.remove("lock"); }
   else { $("start").addEventListener("click", closeIntro); try{ $("start").focus(); }catch(e){} }
 
+  // ---- screens: one at a time, switched by the URL hash ----
+  var screens = ["home","work","about","contact"];
+  function route(){
+    var h = (location.hash || "#home").slice(1);
+    if(screens.indexOf(h) < 0) h = "home";
+    screens.forEach(function(s){ $(s).classList.toggle("on", s === h); });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
   // ---- static text ----
   $("logo").textContent = S.name.toUpperCase();
   $("slogan").textContent = S.slogan;

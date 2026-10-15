@@ -6,7 +6,7 @@
 <title>Naginyata | Illustrator / Artist</title>
 <meta name="description" content="Artwork portfolio of Naginyata, illustrator and artist.">
 <meta name="theme-color" content="#2f2a3a">
-<link rel="stylesheet" href="style.css?v=20261016d">
+<link rel="stylesheet" href="style.css?v=20261016e">
 </head>
 <body class="lock">
 
@@ -21,13 +21,13 @@
 
 <header>
   <div class="wrap">
-    <a class="logo" href="#top" id="logo"></a>
+    <a class="logo" href="#home" id="logo"></a>
   </div>
 </header>
 
 <main>
   <!-- 1. Main: menu (left) + slogan (right) -->
-  <section class="sec" id="top">
+  <section class="screen" id="home">
     <div class="wrap home-in">
       <nav class="menu" id="menu" aria-label="Main menu"></nav>
       <div class="slogan">
@@ -39,8 +39,9 @@
   </section>
 
   <!-- 2. My work -->
-  <section class="sec" id="work" aria-labelledby="hWork">
+  <section class="screen" id="work" aria-labelledby="hWork">
     <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2 id="hWork">My work</h2>
       <div class="filters" id="filters" role="group" aria-label="Filter works"></div>
       <div class="grid" id="grid"></div>
@@ -48,8 +49,9 @@
   </section>
 
   <!-- 3. Work with me (form) -->
-  <section class="sec" id="contact" aria-labelledby="hContact">
+  <section class="screen" id="contact" aria-labelledby="hContact">
     <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2 id="hContact">Work with me</h2>
       <div class="card">
         <form id="form" novalidate>
@@ -65,23 +67,18 @@
   </section>
 
   <!-- 4. About me -->
-  <section class="sec" id="about" aria-labelledby="hAbout">
+  <section class="screen" id="about" aria-labelledby="hAbout">
     <div class="wrap">
+      <a class="back" href="#home">&larr; Home</a>
       <h2 id="hAbout">About me</h2>
       <div class="card about">
         <div id="aboutText"></div>
         <div class="avatar big" id="avatar"></div>
       </div>
+      <div class="lboxes" id="aLinks" aria-label="Links"></div>
     </div>
   </section>
 
-  <!-- 5. Links -->
-  <section class="sec" id="links" aria-labelledby="hLinks">
-    <div class="wrap">
-      <h2 id="hLinks">Links</h2>
-      <div class="lboxes" id="aLinks"></div>
-    </div>
-  </section>
 </main>
 
 <footer>
@@ -90,7 +87,7 @@
 
 <div id="lb"><div class="box" id="lbBox"></div></div>
 
-<script src="data.js?v=20261016d"></script>
-<script src="app.js?v=20261016d"></script>
+<script src="data.js?v=20261016e"></script>
+<script src="app.js?v=20261016e"></script>
 </body>
 </html>
