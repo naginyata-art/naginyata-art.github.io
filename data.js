@@ -1,6 +1,8 @@
 // ===== Naginyata site content =====
 // Edit this file to update profile, links and artworks.
 // Artwork images: put files in /images and set image: "images/xxx.jpg"
+// "thumb" is the small image for the gallery grid (optional; falls back to "image").
+// Use tools/make-images.py to create both sizes automatically.
 // "alt" is the text shown when hovering an artwork (falls back to title).
 // sample:true shows a small SAMPLE badge. Remove it when a real artwork replaces the sample.
 

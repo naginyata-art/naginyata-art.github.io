@@ -51,7 +51,8 @@
   // ---- My Work gallery ----
   function card(a,i){
     var label = a.alt || a.title;
-    var th = a.image ? '<img loading="lazy" src="'+esc(a.image)+'" alt="'+esc(label)+'">' : esc(a.title);
+    var small = a.thumb || a.image; // small image for the grid, full image for the lightbox
+    var th = small ? '<img loading="lazy" decoding="async" src="'+esc(small)+'" alt="'+esc(label)+'">' : esc(a.title);
     var tag = a.sample ? '<span class="tag">SAMPLE</span>' : '';
     return '<div class="art" tabindex="0" role="button" aria-label="'+esc(label)+'" data-i="'+i+'"><div class="thumb">'+th+'</div>'+tag+'<div class="cap">'+esc(label)+'</div></div>';
   }
